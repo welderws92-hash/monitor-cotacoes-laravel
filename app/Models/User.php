@@ -46,4 +46,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    public function alerts()
+    {
+        return $this->hasMany(PriceAlert::class);
+    }
+    
 }
