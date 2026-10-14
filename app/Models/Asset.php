@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Asset extends Model
 {
-    protected $fillable= [
+    protected $fillable = [
         'code',
         'name',
         'type',
@@ -14,22 +14,24 @@ class Asset extends Model
         'current_price',
         'high_price',
         'low_price',
-        'validation_24h',
-    
+        'variation_24h',
     ];
-     protected function casts(): array
-     {
+
+    protected function casts(): array
+    {
         return [
-            'decimal:4',
-            'decimal:4',
-            'decimal:4',
-            'decimal:2',
+            'current_price' => 'decimal:4',
+            'high_price' => 'decimal:4',
+            'low_price' => 'decimal:4',
+            'variation_24h' => 'decimal:2',
         ];
     }
+
     public function priceHistories()
     {
         return $this->hasMany(PriceHistory::class);
     }
+
     public function alerts()
     {
         return $this->hasMany(PriceAlert::class);
