@@ -2,12 +2,13 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AssetController;
 
 Route::get('/', function () {
     return redirect()->route('login');
 });
 
-// Autenticação: visitantes
+// Rotas para visitantes
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLogin'])
         ->name('login');
@@ -22,7 +23,11 @@ Route::middleware('guest')->group(function () {
         ->name('register.store');
 });
 
-// Sair da conta: usuários autenticados
-Route::post('/logout', [AuthController::class, 'logout'])
-    ->middleware('auth')
-    ->name('logout');
+// Rotas para usuários autenticados
+Route::middleware('auth')->group(function () {
+    Route::get('/cotacoes', [AssetController::class, 'index'])
+        ->name('assets.index');
+
+    Route::post('/logout', [AuthController::class, 'logout'])
+        ->name('logout');
+});
